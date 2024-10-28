@@ -1,1 +1,2 @@
 2024-10-28 05:13:52 | Account: 12345 | deposit: 5000./transaction.sh
+2024-10-28 05:15:15 | Account: 67890 | withdraw: 60000
