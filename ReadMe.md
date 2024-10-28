@@ -1,6 +1,6 @@
-### Banking System - Advanced Configuration Playground Challenge
+## Banking System - Advanced Configuration Playground Challenge
 
-## Objective
+### Objective
 
 This challenge simulates a real-world scenario where you are managing the backend of a banking system. You need to:
 
