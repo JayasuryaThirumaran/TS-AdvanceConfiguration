@@ -1,0 +1,36 @@
+name: Banking System Configuration Check
+
+on: [push]
+
+jobs:
+  banking-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Check for Required Scripts
+        run: |
+          for script in transaction.sh monitor_transactions.sh create_account.sh; do
+            if [ ! -f "./$script" ]; then
+              echo "$script is missing!" && exit 1
+            fi
+            chmod +x ./$script
+          done
+
+      - name: Test Transaction Script
+        run: |
+          ./transaction.sh 12345 deposit 5000
+          ./transaction.sh 67890 withdraw 60000
+          grep "Account: 67890 | Withdraw: 60000" transaction_log.txt || (echo "Transaction logging failed!" && exit 1)
+
+      - name: Test Monitor Transactions Script
+        run: |
+          ./monitor_transactions.sh > monitor_output.txt
+          grep "Withdraw: 60000" monitor_output.txt || (echo "Monitoring script failed!" && exit 1)
+
+      - name: Test Account Creation Script
+        run: |
+          ./create_account.sh john_doe 12345
+          grep "john_doe" accounts.txt || (echo "Account creation failed!" && exit 1)
